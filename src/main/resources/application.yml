@@ -1,0 +1,19 @@
+camel:
+    springboot:
+        name: product-info-service
+
+    component:
+        servlet:
+            mapping:
+                contextPath: /product-info-service/*
+
+spring:
+# Spring JDBC configuration
+    datasource:
+# Let Spring Boot auto-configure an embedded HSQL database
+        url:
+
+# Spring Data JPA configuration
+jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
