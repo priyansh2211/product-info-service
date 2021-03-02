@@ -1,18 +1,15 @@
-FROM maven:3.6.3-openjdk-11-slim as builder
+# Extract the layered JAR
+FROM adoptopenjdk/openjdk11:latest as appbuilder_stage
+WORKDIR application
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+RUN java -Djarmode=layertools -jar app.jar extract
+
+FROM adoptopenjdk/openjdk11:latest
+
+ENV TZ=America/Denver
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 WORKDIR /app
-COPY pom.xml .
-# Use this optimization to cache the local dependencies. Works as long as the POM doesn't change
-RUN mvn dependency:go-offline
-
-COPY src/ /app/src/
-RUN mvn package
-
-# Use AdoptOpenJDK for base image.
-FROM adoptopenjdk/openjdk11:jre-11.0.8_10-alpine
-
-# Copy the jar to the production image from the builder stage.
-COPY --from=builder /app/target/*.jar /app.jar
-
-# Run the web service on container startup.
-CMD ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+EXPOSE 8080
