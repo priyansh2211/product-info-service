@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import io.swagger.v3.oas.annotations.Operation;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class MainController {
    * Get all products
    * @return List of Products
    */
+  @Operation(summary = "Get All Ostk Products", description = "Returns the list of ostk products")
   @GetMapping("/products")
   public List<Product> getProducts() {
     return productRepository.findAll();
@@ -34,6 +36,7 @@ public class MainController {
    * @param id
    * @return Product
    */
+  @Operation(summary = "Get Ostk Products by Id", description = "Returns the ostk product")
   @GetMapping("/products/{id}")
   public Product getProduct(@PathVariable Long id) {
     Optional<Product> product = productRepository.findById(id);
