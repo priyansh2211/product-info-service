@@ -1,5 +1,6 @@
 package com.ostk.poc.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,12 +13,18 @@ public class Product {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Schema(description = "Name of the product.",
+          example = "Ostk Chair", required = true)
   @Column(name = "name", nullable = false)
   private String name;
 
+  @Schema(description = "Description of the product.",
+          example = "Ostk Special Chair", required = true)
   @Column(name = "description", nullable = false)
   private String description;
 
+  @Schema(description = "Price of the product.",
+          example = "100.00", required = true)
   @Column(name = "price", nullable = false)
   private Double price;
 
