@@ -50,7 +50,7 @@ public class MainController {
           @ApiResponse(responseCode = "200", description = "successful operation",
                   content = @Content(schema = @Schema(implementation = Product.class))),
           @ApiResponse(responseCode = "404", description = "Product not found") })
-  @GetMapping("/products/{id}")
+  @GetMapping("/product/{id}")
   public Product getProduct(@PathVariable Long id) {
     Optional<Product> product = productRepository.findById(id);
     if (!product.isPresent()) {
